@@ -105,7 +105,7 @@
                                             </constraints>
                                             <state key="normal" image="favor-icon"/>
                                             <connections>
-                                                <action selector="isFavoritedButton:" destination="xvc-c2-YQt" eventType="touchDown" id="t4N-HK-VRl"/>
+                                                <action selector="isFavoriting:" destination="TVt-Bd-5uk" eventType="touchDown" id="fsI-gK-Wdc"/>
                                             </connections>
                                         </button>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="h2O-KO-3tj">
@@ -153,7 +153,7 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="favoriteButton" destination="V4z-oI-uJX" id="hVw-7A-vpI"/>
+                                    <outlet property="favoriteButton" destination="V4z-oI-uJX" id="jt1-Q0-pSc"/>
                                     <outlet property="favoriteCountLabel" destination="krP-GW-Zpi" id="WVS-zB-Nr0"/>
                                     <outlet property="profilePic" destination="h2O-KO-3tj" id="Gy0-HL-xHj"/>
                                     <outlet property="retweetButton" destination="KCd-Fo-QR6" id="ck1-dE-fln"/>

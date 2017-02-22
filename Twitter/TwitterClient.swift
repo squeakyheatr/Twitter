@@ -55,8 +55,18 @@ class TwitterClient: BDBOAuth1SessionManager {
         print(url.description)
     }
     
-    
-    func homeTimeLine(success: @escaping ([Tweet]) -> () , failure: @escaping (Error) -> ()){
+    func willFavorite(id: String, un: Bool){
+        let param = ["id": id]
+        let action = un ? "create" : "destroy"
+        post("1.1/favorites/destroy.json", parameters: param , progress: nil, success: {(task: URLSessionDataTask, response: Any) in
+
+            print("Successful Favorite")
+        }, failure: {(task: URLSessionDataTask?, error: Error) -> Void in
+                        
+        })
+    }
+        
+        func homeTimeLine(success: @escaping ([Tweet]) -> () , failure: @escaping (Error) -> ()){
         get("1.1/statuses/home_timeline.json", parameters: nil, progress: nil, success: {(task: URLSessionDataTask, response: Any) in
             
             let dictionaries = response as! [NSDictionary]

@@ -48,12 +48,14 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         cell.userNameLabel.text = tweet?.user?.name
         cell.profilePic.setImageWith((tweet?.user?.profileURL)!)
         cell.timeLabel.text = tweet?.timeStampAsString
-        cell.favoriteCountLabel.text = tweet?.favoriteCountString
-        cell.retweetCountLabel.text = tweet?.retweetCountString
+        cell.favoriteCountLabel.text = "\(tweet!.favoriteCount)"
+        cell.retweetCountLabel.text = "\(tweet!.retweetCount)"
         cell.twitterUserLabel.text = tweet?.user?.screenName
-        if tweet?.isFavorited != check {
-            cell.favoriteButton.setImage(#imageLiteral(resourceName: "favor-icon-red"), for: .normal)
+        if tweet?.isFavorited == true {
+            cell.favoriteCountLabel.text = "\((tweet?.favoriteCount)! + 1)"
         }
+
+        
         
         return cell
     }
@@ -64,9 +66,6 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
 
     
-    @IBAction func isFavoritedButton(_ sender: Any) {
-        check = true
-    }
 
     @IBAction func onLogoutButton(_ sender: Any) {
         
