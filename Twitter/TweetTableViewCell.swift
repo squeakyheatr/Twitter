@@ -19,8 +19,47 @@ class TweetTableViewCell: UITableViewCell {
     @IBOutlet var retweetCountLabel: UILabel!
     @IBOutlet var favoriteButton: UIButton!
     @IBOutlet var favoriteCountLabel: UILabel!
-    var count = 1
-    var tweet: Tweet!
+    @IBOutlet var profilePicButton: UIButton!
+    
+    
+    var isFavorited: Bool = false
+    var isRetweeted: Bool = false
+    
+    
+    var tweet: Tweet! {
+        didSet {
+            tweetLabel.text = tweet.text
+            userNameLabel.text = tweet.user.name
+            profilePic.setImageWith((tweet.user.profileURL)!)
+            twitterUserLabel.text = "@\(tweet.user!.screenName!)"
+            timeLabel.text = tweet.timeStampAsString
+            
+            
+            let retweetStr = String(tweet.retweetCount)
+            retweetCountLabel.text = retweetStr
+            let favoriteString = String(tweet.favoriteCount)
+            favoriteCountLabel.text = favoriteString
+            
+            if isFavorited == true {
+                favoriteButton.setImage(#imageLiteral(resourceName: "favor-icon-red"), for: .normal)
+                favoriteCountLabel.text = String(tweet.favoriteCount + 1)
+            } else {
+                favoriteButton.setImage(#imageLiteral(resourceName: "favor-icon"), for: .normal)
+                favoriteCountLabel.text = String(tweet.favoriteCount)
+
+            }
+            if isRetweeted == true {
+                retweetButton.setImage(#imageLiteral(resourceName: "retweet-icon-green"), for: .normal)
+                retweetCountLabel.text = String(tweet.retweetCount + 1)
+
+            } else {
+                retweetButton.setImage(#imageLiteral(resourceName: "retweet-icon"), for: .normal)
+                retweetCountLabel.text = String(tweet.retweetCount)
+
+            }
+            
+        }
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -34,20 +73,54 @@ class TweetTableViewCell: UITableViewCell {
     }
     @IBAction func isFavoriting(_ sender: Any) {
         
-        count += 1
-        count = count % 2
-        if count == 0{
-            self.tweet?.isFavorited = !self.tweet.isFavorited!
+        if isFavorited == false {
             favoriteButton.setImage(#imageLiteral(resourceName: "favor-icon-red"), for: .normal)
-//            self.tweet?.favoriteCount =  tweet.favoriteCount + 1
-            self.favoriteCountLabel.text = "\((tweet?.favoriteCount)! + 1)"
+            
+            TwitterClient.sharedInstance?.isFavoriting(id: tweet.tweetIdString!, success: { (tweets:[Tweet]) in
+            }, failure: { (error: Error) in
+            })
+            favoriteCountLabel.text = String(tweet.favoriteCount + 1)
+            isFavorited = true
+        
+        
         } else {
-            self.tweet?.isFavorited = !self.tweet.isFavorited!
             favoriteButton.setImage(#imageLiteral(resourceName: "favor-icon"), for: .normal)
-            self.tweet?.favoriteCount -= 1
-            self.favoriteCountLabel.text = "\((tweet?.favoriteCount)! - 1)"
+            
+            TwitterClient.sharedInstance?.isUnfavoriting(id: tweet.tweetIdString!, success: { (tweets:[Tweet]) in
+            }, failure: { (error: Error) in
+            })
+            
+            favoriteCountLabel.text = String(tweet.favoriteCount)
+            isFavorited = false
         }
         
     }
+    
+    @IBAction func isRetweeting(_ sender: Any) {
+      
+        if isRetweeted == false {
+            retweetButton.setImage(#imageLiteral(resourceName: "retweet-icon-green"), for: .normal)
+            
+            TwitterClient.sharedInstance?.isRetweeting(id: tweet.tweetIdString!, success: { (tweets:[Tweet]) in
+            }, failure: { (error: Error) in
+            })
+            
+            retweetCountLabel.text = String(tweet.retweetCount + 1)
+            isRetweeted = true
+            
+        } else {
+            retweetButton.setImage(#imageLiteral(resourceName: "retweet-icon"), for: .normal)
+            
+            TwitterClient.sharedInstance?.isUnretweeting(id: tweet.tweetIdString!, success: { (tweets:[Tweet]) in
+            }, failure: { (error: Error) in
+            })
+            retweetCountLabel.text = String(tweet.retweetCount)
+            isRetweeted = false
+            
+        }
+        
+    }
+    
+    
 
 }

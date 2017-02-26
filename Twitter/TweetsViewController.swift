@@ -13,6 +13,8 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var check: Bool = false
     @IBOutlet var tweetsTableView: UITableView!
     var tweets: [Tweet]!
+    var user: User!
+    var refreshControl = UIRefreshControl()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,6 +35,10 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         tweetsTableView.estimatedRowHeight = 120
         // Do any additional setup after loading the view.
         //        tweetsTableView.reloadData()
+        
+        
+        self.refreshControl.addTarget(self, action: "didRefreshList", for: .valueChanged )
+        tweetsTableView.refreshControl = self.refreshControl
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -42,20 +48,7 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TweetTableViewCell" ) as! TweetTableViewCell
         
-        let tweet = self.tweets?[indexPath.row]
-        
-        cell.tweetLabel.text = tweet?.text
-        cell.userNameLabel.text = tweet?.user?.name
-        cell.profilePic.setImageWith((tweet?.user?.profileURL)!)
-        cell.timeLabel.text = tweet?.timeStampAsString
-        cell.favoriteCountLabel.text = "\(tweet!.favoriteCount)"
-        cell.retweetCountLabel.text = "\(tweet!.retweetCount)"
-        cell.twitterUserLabel.text = tweet?.user?.screenName
-        if tweet?.isFavorited == true {
-            cell.favoriteCountLabel.text = "\((tweet?.favoriteCount)! + 1)"
-        }
-
-        
+         cell.tweet = self.tweets?[indexPath.row]
         
         return cell
     }
@@ -73,14 +66,41 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
     }
     
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
+    func didRefreshList() {
+        
+        
+        TwitterClient.sharedInstance?.homeTimeLine(success: { (tweets: [Tweet]) -> () in
+            self.tweets = tweets
+            self.tweetsTableView.reloadData()
+        }, failure: { (error: Error) in
+            print(error.localizedDescription)
+        })
+        
+            tweetsTableView.reloadData()
+            
+            refreshControl.endRefreshing()
+        }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "CellSegue" {
+        
+            let segCell = sender as! UITableViewCell
+            let indexPath = tweetsTableView.indexPath(for: segCell)
+            let segTweetCell = tweets![indexPath!.row]
+            
+            let detailsVC = segue.destination as! TweetsDetailsViewController
+            
+            detailsVC.detailTweet = segTweetCell
+        } else if segue.identifier == "PictureSegue" {
+            let segButton = sender as! UIButton
+            let segCell = sender as! UITableViewCell
+            let indexPath = tweetsTableView.indexPath(for: segCell)
+            let segTweetCell = tweets![indexPath!.row]
+            let profileVC = segue.destination as! ProfileViewController
+            profileVC.tweet = segTweetCell
+
+        }
+
+    }
+    
     
 }

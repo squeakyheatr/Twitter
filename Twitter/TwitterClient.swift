@@ -55,17 +55,47 @@ class TwitterClient: BDBOAuth1SessionManager {
         print(url.description)
     }
     
-    func willFavorite(id: String, un: Bool){
-        let param = ["id": id]
-        let action = un ? "create" : "destroy"
-        post("1.1/favorites/destroy.json", parameters: param , progress: nil, success: {(task: URLSessionDataTask, response: Any) in
-
-            print("Successful Favorite")
-        }, failure: {(task: URLSessionDataTask?, error: Error) -> Void in
-                        
-        })
-    }
+    func isFavoriting(id: String, success: @escaping ([Tweet])-> (), failure: @escaping (NSError) -> ()) {
         
+        post("1.1/favorites/create.json?id=\(id)", parameters: nil, progress: nil, success: { (task: URLSessionDataTask!, response: Any?) -> Void in
+            print("favorting")
+        }) { (task: URLSessionDataTask?, error: Error!) in
+            print(error.localizedDescription)
+           //
+        print("didn't favorite")
+        }
+    }
+    
+    func isUnfavoriting(id: String, success: @escaping ([Tweet])-> (), failure: @escaping (NSError) -> ()) {
+        
+        post("1.1/favorites/destroy.json?id=\(id)", parameters: nil, progress: nil, success: { (task: URLSessionDataTask!, response: Any?) -> Void in
+            print("unfavoriting")
+        }) { (task: URLSessionDataTask?, error: Error!) in
+            print(error.localizedDescription)
+            print("didnt unfavorite")
+        }
+    }
+    
+    func isRetweeting(id: String, success: @escaping ([Tweet])-> (), failure: @escaping (NSError) -> ()) {
+        
+        post("1.1/statuses/retweet/\(id).json", parameters: nil, progress: nil, success: { (task: URLSessionDataTask!, response: Any?) -> Void in
+            print("retweeted")
+        }) { (task: URLSessionDataTask?, error: Error!) in
+            print(error.localizedDescription)
+            //
+            print("didnt retweet")
+        }
+    }
+    
+    func isUnretweeting(id: String, success: @escaping ([Tweet])-> (), failure: @escaping (NSError) -> ()) {
+        
+        post("1.1/statuses/unretweet/\(id).json", parameters: nil, progress: nil, success: { (task: URLSessionDataTask!, response: Any?) -> Void in
+            print("unretweeted")
+        }) { (task: URLSessionDataTask?, error: Error!) in
+            print(error.localizedDescription)
+            print("didnt unretweet")
+        }
+    }
         func homeTimeLine(success: @escaping ([Tweet]) -> () , failure: @escaping (Error) -> ()){
         get("1.1/statuses/home_timeline.json", parameters: nil, progress: nil, success: {(task: URLSessionDataTask, response: Any) in
             
