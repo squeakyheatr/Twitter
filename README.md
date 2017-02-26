@@ -23,18 +23,21 @@ The following **optional** features are implemented:
 
 The following **additional** features are implemented:
 
-- [ ] List anything else that you can get done to improve the app functionality!
+- [X] List anything else that you can get done to improve the app functionality!
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 
 1. Added app icon
 2. splash Screen
+3. Added buttons to navigation bar
+4. added post screen
+5. added tweet details page
 
 ## Video Walkthrough 
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+![alt tag](twitter2.gif)
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
@@ -102,7 +105,6 @@ Please list two areas of the assignment you'd like to **discuss further with you
 
 Here's a walkthrough of implemented user stories:
 
-![alt tag](twitter2.gif)
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
