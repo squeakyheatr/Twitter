@@ -7,10 +7,19 @@
 // look retweeted status is something that someone retweeted
 
 import UIKit
-
+protocol TweetTableViewCellDelegate: class  {
+    func profileImageViewTapped(cell: TweetTableViewCell, user: User)
+}
 class TweetTableViewCell: UITableViewCell {
 
-    @IBOutlet var profilePic: UIImageView!
+    @IBOutlet var profilePic: UIImageView! {
+        didSet{
+            self.profilePic.isUserInteractionEnabled = true //make sure this is enabled
+            //tap for userImageView
+            let userProfileTap = UITapGestureRecognizer(target: self, action: #selector(userProfileTapped(_:)))
+            self.profilePic.addGestureRecognizer(userProfileTap)
+        }
+    }
     @IBOutlet var userNameLabel: UILabel!
     @IBOutlet var twitterUserLabel: UILabel!
     @IBOutlet var tweetLabel: UILabel!
@@ -19,8 +28,8 @@ class TweetTableViewCell: UITableViewCell {
     @IBOutlet var retweetCountLabel: UILabel!
     @IBOutlet var favoriteButton: UIButton!
     @IBOutlet var favoriteCountLabel: UILabel!
-    @IBOutlet var profilePicButton: UIButton!
-    
+    weak var delegate: TweetTableViewCellDelegate? //make sure it's weak to prevent retain cycle
+ 
     
     var isFavorited: Bool = false
     var isRetweeted: Bool = false
@@ -40,6 +49,9 @@ class TweetTableViewCell: UITableViewCell {
             let favoriteString = String(tweet.favoriteCount)
             favoriteCountLabel.text = favoriteString
             
+            
+
+            
             if isFavorited == true {
                 favoriteButton.setImage(#imageLiteral(resourceName: "favor-icon-red"), for: .normal)
                 favoriteCountLabel.text = String(tweet.favoriteCount + 1)
@@ -57,10 +69,10 @@ class TweetTableViewCell: UITableViewCell {
                 retweetCountLabel.text = String(tweet.retweetCount)
 
             }
-            
+
         }
     }
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -121,6 +133,12 @@ class TweetTableViewCell: UITableViewCell {
         
     }
     
+    func userProfileTapped(_ gesture: UITapGestureRecognizer){
+        if let delegate = delegate{
+            delegate.profileImageViewTapped(cell: self, user: self.tweet.user)
+        }
+    }
+
     
 
 }

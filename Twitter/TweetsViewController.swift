@@ -48,7 +48,9 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TweetTableViewCell" ) as! TweetTableViewCell
         
-         cell.tweet = self.tweets?[indexPath.row]
+        cell.tweet = self.tweets?[indexPath.row]
+        cell.delegate = self
+        
         
         return cell
     }
@@ -57,9 +59,9 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
     
-
+    
+    
     @IBAction func onLogoutButton(_ sender: Any) {
         
         TwitterClient.sharedInstance?.logOut()
@@ -68,7 +70,6 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func didRefreshList() {
         
-        
         TwitterClient.sharedInstance?.homeTimeLine(success: { (tweets: [Tweet]) -> () in
             self.tweets = tweets
             self.tweetsTableView.reloadData()
@@ -76,13 +77,14 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
             print(error.localizedDescription)
         })
         
-            tweetsTableView.reloadData()
-            
-            refreshControl.endRefreshing()
-        }
+        tweetsTableView.reloadData()
+        
+        refreshControl.endRefreshing()
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "CellSegue" {
-        
+            
             let segCell = sender as! UITableViewCell
             let indexPath = tweetsTableView.indexPath(for: segCell)
             let segTweetCell = tweets![indexPath!.row]
@@ -90,17 +92,27 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
             let detailsVC = segue.destination as! TweetsDetailsViewController
             
             detailsVC.detailTweet = segTweetCell
-        } else if segue.identifier == "PictureSegue" {
-            let segButton = sender as! UIButton
-            let segCell = sender as! UITableViewCell
+        } else if segue.identifier == "ProfileSegue" {
+            let segVc = sender as! TweetsViewController
+            let segCell = segVc.tweetsTableView as! UITableViewCell
             let indexPath = tweetsTableView.indexPath(for: segCell)
             let segTweetCell = tweets![indexPath!.row]
             let profileVC = segue.destination as! ProfileViewController
             profileVC.tweet = segTweetCell
-
+            
         }
-
+        
     }
     
-    
+}
+
+extension TweetsViewController: TweetTableViewCellDelegate{
+    func profileImageViewTapped(cell: TweetTableViewCell, user: User) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        if let profileVC = storyboard.instantiateViewController(withIdentifier:"Profile") as? ProfileViewController
+        {
+            profileVC.tweet = cell.tweet //set the profile user before your push
+            self.navigationController?.pushViewController(profileVC, animated: true)
+        }
+    }
 }

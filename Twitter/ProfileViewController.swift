@@ -23,8 +23,14 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         profileBackgroundImage.setImageWith(tweet.user.backgroundImage!)
+        profileProfileImage.setImageWith(tweet.user.profileURL!)
+        profileUserNameLabel.text = tweet.user.name
+        profileScreenNameLabel.text = "@ \(tweet.user.screenName!)"
+        profileDescriptionLabel.text = "\(tweet.user.description)"
+        profileNumOfTweetLabel.text = "\(tweet.user.numberOfTweets!) Tweets"
+        profileFollowersLabel.text = "\(tweet.user.numberOfFollwers!) Followers"
+        profileFollowingLabel.text = "\(tweet.user.numberOfFollows!) Following"
         
-
         // Do any additional setup after loading the view.
     }
 
