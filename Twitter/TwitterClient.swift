@@ -11,6 +11,9 @@ import BDBOAuth1Manager
 
 class TwitterClient: BDBOAuth1SessionManager {
     
+    static let oAuthBaseURL = "https://api.twitter.com"
+    static let sendTweetEndPoint = TwitterClient.oAuthBaseURL + "/1.1/statuses/update.json?status="
+
     
     static let sharedInstance = TwitterClient(baseURL: NSURL(string: "https://api.twitter.com")! as URL!, consumerKey: "7ifS3kucmzuJCgPUESUmnemxO", consumerSecret: "PawObRJuWyB80TKoONp3sJytgjxOtt2lJQP8JfNNVX0pPnrl6v")
     
@@ -96,6 +99,30 @@ class TwitterClient: BDBOAuth1SessionManager {
             print("didnt unretweet")
         }
     }
+    
+    
+    class func sendTweet(text: String, callBack: @escaping (_ response: Tweet?, _ error: Error? ) -> Void){
+        
+        guard let encodedText = text.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else{
+            callBack(nil, nil)
+            return
+        }
+        let urlString = TwitterClient.sendTweetEndPoint + encodedText
+        let _ = TwitterClient.sharedInstance?.post(urlString, parameters: nil, progress: nil, success: { (task: URLSessionDataTask, response:Any?) in
+            if let tweetDict = response as? [String: Any]{
+                let tweet = Tweet(dictionary: tweetDict as NSDictionary) //make sure you have your Tweet model ready, and its initializer should take a dictionary as the parameter
+                callBack(tweet, nil)
+            }else{
+                callBack(nil, nil)
+            }
+        }, failure: { (task: URLSessionDataTask?, error:Error) in
+            print("failed to tweet")
+            print(error.localizedDescription)
+            callBack(nil, error)
+        })
+    }
+
+
         func homeTimeLine(success: @escaping ([Tweet]) -> () , failure: @escaping (Error) -> ()){
         get("1.1/statuses/home_timeline.json", parameters: nil, progress: nil, success: {(task: URLSessionDataTask, response: Any) in
             

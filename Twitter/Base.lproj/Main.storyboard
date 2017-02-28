@@ -346,10 +346,10 @@
             </objects>
             <point key="canvasLocation" x="3176.8000000000002" y="138.98050974512745"/>
         </scene>
-        <!--View Controller-->
+        <!--Compose View Controller-->
         <scene sceneID="Gpm-pC-VNs">
             <objects>
-                <viewController id="Cct-2g-ZJ9" sceneMemberID="viewController">
+                <viewController id="Cct-2g-ZJ9" customClass="ComposeViewController" customModule="Twitter" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="6lj-1y-RHo"/>
                         <viewControllerLayoutGuide type="bottom" id="iEm-ev-WnY"/>
@@ -358,8 +358,40 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="F3v-VL-PFG">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="82"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qt2-9Y-Fot">
+                                        <rect key="frame" x="301" y="26" width="66" height="30"/>
+                                        <state key="normal" title="Compose"/>
+                                        <connections>
+                                            <action selector="ComposeTweet:" destination="Cct-2g-ZJ9" eventType="touchDown" id="gKI-gY-dGQ"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SUC-XV-8wT">
+                                        <rect key="frame" x="8" y="26" width="48" height="30"/>
+                                        <state key="normal" title="Cancel"/>
+                                        <connections>
+                                            <action selector="Cancel:" destination="Cct-2g-ZJ9" eventType="touchDown" id="1U0-jg-xmR"/>
+                                        </connections>
+                                    </button>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="TwitterLogoBlue" translatesAutoresizingMaskIntoConstraints="NO" id="tLE-ZL-U49">
+                                        <rect key="frame" x="136" y="0.0" width="102" height="82"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="375" id="3nl-bb-stQ"/>
+                                    <constraint firstAttribute="height" constant="82" id="CYD-5x-lOC"/>
+                                    <constraint firstItem="SUC-XV-8wT" firstAttribute="top" secondItem="F3v-VL-PFG" secondAttribute="top" constant="26" id="Eph-Qq-Y8N"/>
+                                    <constraint firstItem="qt2-9Y-Fot" firstAttribute="top" secondItem="F3v-VL-PFG" secondAttribute="top" constant="26" id="Z6x-lS-gGN"/>
+                                    <constraint firstItem="SUC-XV-8wT" firstAttribute="leading" secondItem="F3v-VL-PFG" secondAttribute="leading" constant="8" id="cpZ-kL-mEC"/>
+                                    <constraint firstAttribute="trailing" secondItem="qt2-9Y-Fot" secondAttribute="trailing" constant="8" id="jqJ-hO-HIV"/>
+                                </constraints>
+                            </view>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="OCS-EB-YUi">
-                                <rect key="frame" x="0.0" y="28" width="375" height="30"/>
+                                <rect key="frame" x="0.0" y="90" width="375" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -367,7 +399,16 @@
                             </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="F3v-VL-PFG" secondAttribute="trailing" id="9ZG-fH-qFR"/>
+                            <constraint firstItem="F3v-VL-PFG" firstAttribute="top" secondItem="tfm-YV-B2N" secondAttribute="top" id="OdF-Sl-c1i"/>
+                            <constraint firstItem="F3v-VL-PFG" firstAttribute="leading" secondItem="tfm-YV-B2N" secondAttribute="leading" id="pmO-fg-f1N"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="cancelButton" destination="SUC-XV-8wT" id="ymp-kI-Oe8"/>
+                        <outlet property="composeTextLabel" destination="OCS-EB-YUi" id="CBk-Tl-LLd"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kWe-mR-EG5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -500,6 +541,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="TwitterLogoBlue" width="200" height="200"/>
         <image name="edit-icon" width="30" height="27"/>
         <image name="favor-icon" width="30" height="30"/>
         <image name="reply-icon" width="30" height="30"/>

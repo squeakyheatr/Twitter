@@ -41,6 +41,17 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         tweetsTableView.refreshControl = self.refreshControl
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        TwitterClient.sharedInstance?.homeTimeLine(success: { (tweets: [Tweet]) -> () in
+            self.tweets = tweets
+            self.tweetsTableView.reloadData()
+        }, failure: { (error: Error) in
+            print(error.localizedDescription)
+        })
+        
+        tweetsTableView.reloadData()
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.tweets?.count ?? 0
     }

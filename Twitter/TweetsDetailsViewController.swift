@@ -33,6 +33,7 @@ class TweetsDetailsViewController: UIViewController {
         detailsFavoriteCountLabel.text = "\(detailTweet.favoriteCount)"
 
     }
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
