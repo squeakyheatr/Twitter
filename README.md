@@ -95,14 +95,15 @@ The following **optional** features are implemented:
 The following **additional** features are implemented:
 
 - [X] List anything else that you can get done to improve the app functionality!
-*Added custom Splash Screen
-*Added custom icon
-*Added color to text count, green when under 140 red when over 140
-*Added segue to profiles from profile pictures on tweets details page
-*Added custom colors to UINav bar
-*Added custome colors to UINav bar buttons
-*Rounded profile pics on details and tweets page
-*Added Custom icons on Nav Bars
+- Added custom Splash Screen
+- Added custom icon
+- Added color to text count, green when under 140 red when over 140
+- Added segue to profiles from profile pictures on tweets details page
+- Added custom colors to UINav bar
+- Added custome colors to UINav bar buttons
+- Rounded profile pics on details and tweets page
+- Added Custom icons on Nav Bars
+- Formatted time for tweets
 
 
 
