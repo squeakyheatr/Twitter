@@ -63,7 +63,7 @@ Describe any challenges encountered while building the app.
     
     
     
-    # Project 5 - *Name of App Here*
+# Project 5 - *Name of App Here*
 
 Time spent: **X** hours spent in total
 
@@ -76,12 +76,12 @@ The following **required** functionality is completed:
    - [X] Contains the user header view
    - [X] Contains a section with the users basic stats: # tweets, # following, # followers
 - [X] Home Timeline: Tapping on a user image should bring up that user's profile page
-- [ ] Compose Page: User can compose a new tweet by tapping on a compose button.
+- [X] Compose Page: User can compose a new tweet by tapping on a compose button.
 
 The following **optional** features are implemented:
 
 - [ ] When composing, you should have a countdown in the upper right for the tweet limit.
-- [ ] After creating a new tweet, a user should be able to view it in the timeline immediately without refetching the timeline from the network.
+- [X] After creating a new tweet, a user should be able to view it in the timeline immediately without refetching the timeline from the network.
 - [ ] Profile Page
    - [ ] Implement the paging view for the user description.
    - [ ] As the paging view moves, increase the opacity of the background screen. See the actual Twitter app for this effect
