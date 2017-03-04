@@ -145,6 +145,19 @@ class TwitterClient: BDBOAuth1SessionManager {
             callBack(nil, error)
         })
     }
+    
+    func loadMoreTweets(id: Int, success: @escaping ([Tweet])-> (), failure: @escaping (NSError) -> ()){
+        get("1.1/statuses/home_timeline.json?max_id=\(id)", parameters: nil, progress: nil, success: { (task: URLSessionDataTask, response: Any?) in
+            
+            let dictionaries  = response as! [NSDictionary]
+            let tweets = Tweet.tweetsWithArray(dictionaries: dictionaries)
+            
+            success(tweets)
+            
+        }, failure: { (task: URLSessionDataTask?, error: Error) in
+            failure(error as NSError)
+        })
+    }
 
 
         func homeTimeLine(success: @escaping ([Tweet]) -> () , failure: @escaping (Error) -> ()){

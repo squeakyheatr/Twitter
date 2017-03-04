@@ -9,12 +9,16 @@
 import UIKit
 import AFNetworking
 
-class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate {
     var check: Bool = false
     @IBOutlet var tweetsTableView: UITableView!
     var tweets: [Tweet]!
     var user: User!
     var refreshControl = UIRefreshControl()
+
+    var isMoreDataLoading = false
+    var loadingMoreView: InifinteScrollActivityView?
+    var id: Int!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,6 +46,16 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.130674147, green: 0.6089884724, blue: 1, alpha: 1)
         navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
+        
+        
+        let frame = CGRect(x: 0, y: tweetsTableView.contentSize.height, width: tweetsTableView.bounds.size.width, height: InifinteScrollActivityView.defaultHeight)
+        loadingMoreView = InifinteScrollActivityView(frame: frame)
+        loadingMoreView!.isHidden = true
+        tweetsTableView.addSubview(loadingMoreView!)
+        
+        var insets = tweetsTableView.contentInset;
+        insets.bottom += InifinteScrollActivityView.defaultHeight;
+        tweetsTableView.contentInset = insets
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -56,7 +70,11 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.tweets?.count ?? 0
+        if self.tweets != nil {
+            return self.tweets.count
+        } else {
+            return 0
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -96,6 +114,46 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         refreshControl.endRefreshing()
     }
     
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if !isMoreDataLoading {
+            let scrollViewContentHeight = tweetsTableView.contentSize.height
+            let scrollOffsetThreshold = scrollViewContentHeight - tweetsTableView.bounds.size.height
+            if(scrollView.contentOffset.y > scrollOffsetThreshold && tweetsTableView.isDragging) {
+                
+                isMoreDataLoading = true
+                
+                let frame = CGRect(x: 0, y: tweetsTableView.contentSize.height, width: tweetsTableView.bounds.size.width, height: InifinteScrollActivityView.defaultHeight)
+                loadingMoreView?.frame = frame
+                loadingMoreView!.startAnimating()
+                
+                self.id = self.tweets[self.tweets.count - 1].tweetId!
+                
+                loadMoreData()
+            }
+        }
+        
+    }
+    
+    func loadMoreData() {
+        
+        TwitterClient.sharedInstance?.loadMoreTweets(id: id, success: { (tweets: [Tweet]) in
+            
+            for tweet in tweets {
+                self.tweets?.append(tweet)
+                
+            }
+            self.loadingMoreView!.stopAnimating()
+            self.isMoreDataLoading = false
+            self.tweetsTableView.reloadData()
+            
+        }, failure: {
+            
+            (error: Error) in
+            
+            print(error)
+        })
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "CellSegue" {
             
@@ -120,6 +178,8 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
         
     }
+    
+    
     
 }
 

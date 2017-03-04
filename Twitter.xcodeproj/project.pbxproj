@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		490552FC1E6B6FE50023498D /* InifinteScrollActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 490552FB1E6B6FE50023498D /* InifinteScrollActivityView.swift */; };
 		4911650B1E595CBE004D9F32 /* TweetTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4911650A1E595CBE004D9F32 /* TweetTableViewCell.swift */; };
 		4960AF7F1E57CD1400376AB7 /* Tweet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4960AF7E1E57CD1400376AB7 /* Tweet.swift */; };
 		4960AF811E57CD2100376AB7 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4960AF801E57CD2100376AB7 /* User.swift */; };
@@ -25,6 +26,7 @@
 
 /* Begin PBXFileReference section */
 		365D606BC4FBC86D67850F66 /* Pods_Twitter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Twitter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		490552FB1E6B6FE50023498D /* InifinteScrollActivityView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InifinteScrollActivityView.swift; sourceTree = "<group>"; };
 		4911650A1E595CBE004D9F32 /* TweetTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweetTableViewCell.swift; sourceTree = "<group>"; };
 		4960AF7E1E57CD1400376AB7 /* Tweet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tweet.swift; sourceTree = "<group>"; };
 		4960AF801E57CD2100376AB7 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -59,6 +61,7 @@
 		491165091E595C9F004D9F32 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				490552FB1E6B6FE50023498D /* InifinteScrollActivityView.swift */,
 				4911650A1E595CBE004D9F32 /* TweetTableViewCell.swift */,
 			);
 			name = Views;
@@ -268,6 +271,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				49B4A5771E55204C00C48B08 /* AppDelegate.swift in Sources */,
+				490552FC1E6B6FE50023498D /* InifinteScrollActivityView.swift in Sources */,
 				496AAE7F1E5523BA003C0467 /* LogInViewController.swift in Sources */,
 				4960AF851E5831CD00376AB7 /* TweetsViewController.swift in Sources */,
 				4960AF811E57CD2100376AB7 /* User.swift in Sources */,
