@@ -8,15 +8,15 @@
 
 import UIKit
 
-class ComposeViewController: UIViewController, UITextFieldDelegate {
+class ComposeViewController: UIViewController, UITextViewDelegate {
     
     @IBOutlet var tweetButton: UIButton!
     @IBOutlet var countingLabel: UILabel!
     @IBOutlet var cancelButton: UIButton!
-    @IBOutlet var composeTextLabel: UITextField!
+    @IBOutlet var composeTextLabel: UITextView!
     var count = 0
     let tweetLimit = 140
-    var isReplying = false
+    var isReplying: Bool?
     var tweet: Tweet!
     
     override func viewDidLoad() {
@@ -29,7 +29,6 @@ class ComposeViewController: UIViewController, UITextFieldDelegate {
         }
         count = (composeTextLabel.text?.characters.count)!
         countingLabel.text = "\(tweetLimit - count)"
-        composeTextLabel.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         countingLabel.textColor = #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)
         // Do any additional setup after loading the view.
     }
@@ -58,7 +57,8 @@ class ComposeViewController: UIViewController, UITextFieldDelegate {
         
         dismiss(animated: true, completion: nil)
     }
-    func textFieldDidChange(_ textField: UITextField) {
+
+    func textViewDidChange(_ textView: UITextView) {
         count = (composeTextLabel.text?.characters.count)!
         countingLabel.text = "\(tweetLimit - count)"
         if count <= 140 {
@@ -69,6 +69,5 @@ class ComposeViewController: UIViewController, UITextFieldDelegate {
             countingLabel.textColor = #colorLiteral(red: 0.7450980544, green: 0.1568627506, blue: 0.07450980693, alpha: 1)
         }
     }
-    
     
 }

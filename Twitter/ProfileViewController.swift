@@ -26,7 +26,7 @@ class ProfileViewController: UIViewController {
         profileProfileImage.setImageWith(tweet.user.profileURL!)
         profileUserNameLabel.text = tweet.user.name
         profileScreenNameLabel.text = "@ \(tweet.user.screenName!)"
-        profileDescriptionLabel.text = "\(tweet.user.description)"
+        profileDescriptionLabel.text = "\(tweet.user.userDescription!)"
         profileNumOfTweetLabel.text = "\(calculateNumber(numberIn: tweet.user.numberOfTweets!)!) Tweets"
         profileFollowersLabel.text = "\(calculateNumber(numberIn: tweet.user.numberOfFollwers!)!) Followers"
         profileFollowingLabel.text = "\(calculateNumber(numberIn: tweet.user.numberOfFollows!)!) Following"

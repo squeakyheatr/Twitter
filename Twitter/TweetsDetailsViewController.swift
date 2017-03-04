@@ -27,6 +27,8 @@ class TweetsDetailsViewController: UIViewController {
     @IBOutlet var detailsFavoriteButton: UIButton!
     @IBOutlet var detailsRewteetButton: UIButton!
     @IBOutlet var detailsReplyButton: UIButton!
+    var isFavorited = false
+    var isRetweeted = false
     var isReplying = true
     var detailTweet: Tweet!
     
@@ -41,12 +43,78 @@ class TweetsDetailsViewController: UIViewController {
         detailsFavoriteCountLabel.text = "\(detailTweet.favoriteCount)"
         profilePic.layer.cornerRadius = 4
         profilePic.clipsToBounds = true
+        
+        if isFavorited == true {
+            detailsFavoriteButton.setImage(#imageLiteral(resourceName: "favor-icon-red"), for: .normal)
+            detailsFavoriteCountLabel.text = String(detailTweet.favoriteCount)
+        } else {
+            detailsFavoriteButton.setImage(#imageLiteral(resourceName: "favor-icon"), for: .normal)
+            detailsFavoriteCountLabel.text = String(detailTweet.favoriteCount)
+            
+        }
+        if isRetweeted == true {
+            detailsRewteetButton.setImage(#imageLiteral(resourceName: "retweet-icon-green"), for: .normal)
+            
+        } else {
+            detailsRewteetButton.setImage(#imageLiteral(resourceName: "retweet-icon"), for: .normal)
+            
+        }
     }
     
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    
+    @IBAction func isFavoriting(_ sender: Any) {
+        if isFavorited == false {
+            detailsFavoriteButton.setImage(#imageLiteral(resourceName: "favor-icon-red"), for: .normal)
+            
+            TwitterClient.sharedInstance?.isFavoriting(id: detailTweet.tweetIdString!, success: { (tweets:[Tweet]) in
+            }, failure: { (error: Error) in
+            })
+            detailsFavoriteCountLabel.text = String(detailTweet.favoriteCount + 1)
+            isFavorited = true
+            
+            
+        } else {
+            detailsFavoriteButton.setImage(#imageLiteral(resourceName: "favor-icon"), for: .normal)
+            
+            TwitterClient.sharedInstance?.isUnfavoriting(id: detailTweet.tweetIdString!, success: { (tweets:[Tweet]) in
+            }, failure: { (error: Error) in
+            })
+            
+            detailsFavoriteCountLabel.text = String(detailTweet.favoriteCount)
+            isFavorited = false
+        }
+        
+    }
+    
+    @IBAction func isRetweeting(_ sender: Any) {
+        
+        if isRetweeted == false {
+            detailsRewteetButton.setImage(#imageLiteral(resourceName: "retweet-icon-green"), for: .normal)
+            
+            TwitterClient.sharedInstance?.isRetweeting(id: detailTweet.tweetIdString!, success: { (tweets:[Tweet]) in
+            }, failure: { (error: Error) in
+            })
+            
+            detailsRetweetCountLabel.text = String(detailTweet.retweetCount + 1)
+            isRetweeted = true
+            
+        } else {
+            detailsRewteetButton.setImage(#imageLiteral(resourceName: "retweet-icon"), for: .normal)
+            
+            TwitterClient.sharedInstance?.isUnretweeting(id: detailTweet.tweetIdString!, success: { (tweets:[Tweet]) in
+            }, failure: { (error: Error) in
+            })
+            detailsRetweetCountLabel.text = String(detailTweet.retweetCount)
+            isRetweeted = false
+            
+        }
+        
     }
     
     
@@ -67,9 +135,10 @@ class TweetsDetailsViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "isReply"{
-        let composeVC = segue.destination as? ComposeViewController
-        composeVC!.tweet = self.detailTweet
-        composeVC!.isReplying = self.isReplying
+            let composeVC = segue.destination as? ComposeViewController
+            composeVC!.tweet = self.detailTweet
+            composeVC!.isReplying = isReplying
+            print("i am passing data")
         }
     }
     

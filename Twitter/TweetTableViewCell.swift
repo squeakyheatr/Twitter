@@ -85,6 +85,7 @@ class TweetTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    
     @IBAction func isFavoriting(_ sender: Any) {
         
         if isFavorited == false {

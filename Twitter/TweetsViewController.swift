@@ -106,6 +106,9 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
             let detailsVC = segue.destination as! TweetsDetailsViewController
             
             detailsVC.detailTweet = segTweetCell
+            detailsVC.isFavorited = segTweetCell.isFavorited!
+            detailsVC.isRetweeted = segTweetCell.isRetweeted!
+            
         } else if segue.identifier == "ProfileSegue" {
             let segVc = sender as! TweetsViewController
             let segCell = segVc.tweetsTableView as! UITableViewCell
