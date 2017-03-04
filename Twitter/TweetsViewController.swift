@@ -39,6 +39,9 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         self.refreshControl.addTarget(self, action: "didRefreshList", for: .valueChanged )
         tweetsTableView.refreshControl = self.refreshControl
+        
+        navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.130674147, green: 0.6089884724, blue: 1, alpha: 1)
+        navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
     }
     
     override func viewDidAppear(_ animated: Bool) {

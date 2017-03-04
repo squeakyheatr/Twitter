@@ -27,10 +27,11 @@ class ProfileViewController: UIViewController {
         profileUserNameLabel.text = tweet.user.name
         profileScreenNameLabel.text = "@ \(tweet.user.screenName!)"
         profileDescriptionLabel.text = "\(tweet.user.description)"
-        profileNumOfTweetLabel.text = "\(tweet.user.numberOfTweets!) Tweets"
-        profileFollowersLabel.text = "\(tweet.user.numberOfFollwers!) Followers"
-        profileFollowingLabel.text = "\(tweet.user.numberOfFollows!) Following"
-        
+        profileNumOfTweetLabel.text = "\(calculateNumber(numberIn: tweet.user.numberOfTweets!)!) Tweets"
+        profileFollowersLabel.text = "\(calculateNumber(numberIn: tweet.user.numberOfFollwers!)!) Followers"
+        profileFollowingLabel.text = "\(calculateNumber(numberIn: tweet.user.numberOfFollows!)!) Following"
+        profileProfileImage.layer.cornerRadius = 4
+        profileProfileImage.clipsToBounds = true
         // Do any additional setup after loading the view.
     }
 
@@ -39,7 +40,25 @@ class ProfileViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
+    @IBAction func goHome(_ sender: Any) {
+        navigationController?.popViewController(animated: true)
+        
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func calculateNumber(numberIn: Int!) -> String! {
+        var thousands: Int?
+        var hundreds: Int?
+        var tens: Int?
+        if numberIn > 1000 {
+            thousands = numberIn / 1000
+            hundreds = numberIn / 100
+            tens = hundreds! % 10
+            return "\(thousands!)k"
+        } else {
+            return "\(numberIn!)"
+        }
+    }
     /*
     // MARK: - Navigation
 

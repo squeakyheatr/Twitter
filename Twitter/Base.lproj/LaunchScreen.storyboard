@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -21,19 +22,34 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Twitter" translatesAutoresizingMaskIntoConstraints="NO" id="XbK-an-t1f">
-                                <rect key="frame" x="98" y="179" width="179" height="99"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="TwitterLogo" translatesAutoresizingMaskIntoConstraints="NO" id="XbK-an-t1f">
+                                <rect key="frame" x="74" y="148" width="226" height="208"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="226" id="MRk-9i-jeQ"/>
+                                    <constraint firstAttribute="height" constant="208" id="hmX-tM-x5N"/>
+                                </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Twitter" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qeM-a3-lNu">
-                                <rect key="frame" x="86" y="336" width="202" height="110"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="PartyLetPlain" family="Party LET" pointSize="97"/>
-                                <color key="textColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Twitter" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qeM-a3-lNu">
+                                <rect key="frame" x="86" y="423" width="202" height="110"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="110" id="HkF-va-41I"/>
+                                    <constraint firstAttribute="width" constant="202" id="ZqS-kh-kGc"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="SnellRoundhand-Bold" family="Snell Roundhand" pointSize="66"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.13067414699999999" green="0.60898847239999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="qeM-a3-lNu" secondAttribute="trailing" constant="71" id="Vku-Eh-Roi"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="XbK-an-t1f" secondAttribute="trailing" constant="59" id="d1J-od-T5d"/>
+                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="qeM-a3-lNu" secondAttribute="bottom" constant="134" id="eha-e5-l2J"/>
+                            <constraint firstItem="qeM-a3-lNu" firstAttribute="top" secondItem="XbK-an-t1f" secondAttribute="bottom" constant="67" id="hHl-aa-agj"/>
+                            <constraint firstItem="XbK-an-t1f" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="58" id="rwa-pN-wWL"/>
+                            <constraint firstItem="XbK-an-t1f" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="128" id="t6d-5Z-0Ts"/>
+                            <constraint firstItem="qeM-a3-lNu" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="70" id="wF9-fh-Ckz"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -42,6 +58,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Twitter" width="256" height="200"/>
+        <image name="TwitterLogo" width="120" height="120"/>
     </resources>
 </document>
