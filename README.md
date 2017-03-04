@@ -80,7 +80,7 @@ The following **required** functionality is completed:
 
 The following **optional** features are implemented:
 
-- [ ] When composing, you should have a countdown in the upper right for the tweet limit.
+- [X] When composing, you should have a countdown in the upper right for the tweet limit.
 - [X] After creating a new tweet, a user should be able to view it in the timeline immediately without refetching the timeline from the network.
 - [ ] Profile Page
    - [ ] Implement the paging view for the user description.
@@ -94,7 +94,17 @@ The following **optional** features are implemented:
 
 The following **additional** features are implemented:
 
-- [ ] List anything else that you can get done to improve the app functionality!
+- [X] List anything else that you can get done to improve the app functionality!
+*Added custom Splash Screen
+*Added custom icon
+*Added color to text count, green when under 140 red when over 140
+*Added segue to profiles from profile pictures on tweets details page
+*Added custom colors to UINav bar
+*Added custome colors to UINav bar buttons
+*Rounded profile pics on details and tweets page
+*Added Custom icons on Nav Bars
+
+
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 
